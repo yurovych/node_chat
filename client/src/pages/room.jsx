@@ -6,11 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { ChatBlock } from './ChatsBlock.jsx';
 
 function messageValidation(newMessage) {
-  if (!newMessage || newMessage.trim().length === 0) {
-    return 'Message required';
-  }
-
-  if (newMessage.trim().length > 3000) {
+  if (newMessage.trim().length > 300) {
     return 'Message is to long';
   }
 }
@@ -28,21 +24,21 @@ export const Room = () => {
   }
 
   return (
-    <div className='flex justify-between gap-10 w-screen px-5 mt-5'>
-      <div className='flex flex-col items-center text-center w-4/12 mb-10'>
-        <div className='flex justify-between items-center h-8 w-full'>
+    <div className="flex justify-between gap-10 w-screen px-5 mt-5">
+      <div className="flex flex-col items-center text-center w-4/12 mb-10">
+        <div className="flex justify-between items-center h-8 w-full">
           <h4>{`${user} in a "${currentRoom.name}" room`} </h4>
 
           <button
-            className=' w-20 rounded-xl bg-red-600 h-full'
+            className=" w-20 rounded-xl bg-red-600 h-full"
             onClick={handleLogOut}
-            type='button'
+            type="button"
           >
             Log out
           </button>
         </div>
 
-        <div className='w-full'>
+        <div className="w-full">
           <Formik
             initialValues={{ newMessage: '' }}
             validateOnMount={true}
@@ -64,9 +60,7 @@ export const Room = () => {
                     return;
                   }
 
-                  const { errors, message } = error.response.data;
-
-                  formikHelpers.setFieldError('newMessage', errors?.newMessage);
+                  const { message } = error.response.data;
 
                   if (message) {
                     setError(message);
@@ -74,7 +68,6 @@ export const Room = () => {
                 })
                 .finally(() => {
                   formikHelpers.setSubmitting(false);
-                  formikHelpers.setFieldValue('newMessage', '');
                 });
             }}
           >
@@ -86,20 +79,20 @@ export const Room = () => {
               setFieldValue,
               resetForm,
             }) => (
-              <div className='flex flex-col items-center'>
-                <div className='flex overflow-y-scroll items-start flex-col-reverse border-solid border-gray-300 rounded-xl h-70vh w-full px-4 py-2'>
-                  <div className='flex flex-col items-start w-full'>
+              <div className="flex flex-col items-center">
+                <div className="flex overflow-y-scroll items-start flex-col-reverse border-solid border-gray-300 rounded-xl h-70vh w-full px-4 py-2">
+                  <div className="flex flex-col items-start w-full">
                     {currentRoom.history.map((mes) => {
                       return (
                         <div
                           key={mes.id}
-                          className='bg-slate-100 p-2 mb-2 rounded-xl w-full'
+                          className="bg-slate-100 p-2 mb-2 rounded-xl w-full"
                         >
-                          <p className='text-start text-sm text-stone-500'>
+                          <p className="text-start text-sm text-stone-500">
                             {mes.user}
                           </p>
                           <p
-                            className='flex max-w-full p-2 rounded-xl bg-slate-200 w-full text-start'
+                            className="flex max-w-full p-2 rounded-xl bg-slate-200 w-full text-start"
                             style={{
                               wordBreak: 'break-word',
                               overflowWrap: 'break-word',
@@ -108,7 +101,7 @@ export const Room = () => {
                             {mes.message}
                             <br />
                           </p>
-                          <p className='text-end text-xs text-stone-400'>
+                          <p className="text-end text-xs text-stone-400">
                             {mes.time}
                           </p>
                         </div>
@@ -117,22 +110,22 @@ export const Room = () => {
                   </div>
                 </div>
 
-                <Form className='w-full'>
-                  <div className='flex h-8'>
-                    <div className='w-full h-full'>
+                <Form className="w-full">
+                  <div className="flex h-8">
+                    <div className="w-full h-full">
                       <Field
-                        className='w-full border-1 border-gray-300 rounded-l-xl px-4 h-8'
+                        className="w-full border-1 border-gray-300 rounded-l-xl px-4 h-8"
                         validate={messageValidation}
-                        name='newMessage'
-                        type='text'
-                        id='newMessage'
-                        placeholder='Message'
+                        name="newMessage"
+                        type="text"
+                        id="newMessage"
+                        placeholder="Message"
                       />
                     </div>
 
                     <button
-                      className='w-20 h-full bg-green-600'
-                      type='submit'
+                      className="w-20 h-full bg-green-600"
+                      type="submit"
                       disabled={
                         isSubmitting || errors.newMessage || !values.newMessage
                       }
@@ -141,12 +134,12 @@ export const Room = () => {
                     </button>
 
                     <button
-                      className='w-20 rounded-r-xl h-full bg-blue-600'
+                      className="w-20 rounded-r-xl h-full bg-blue-600"
                       onClick={() => {
                         resetForm();
                         setFieldValue('newMessage', '');
                       }}
-                      type='button'
+                      type="button"
                       disabled={isSubmitting || !values.newMessage}
                     >
                       Clear
@@ -167,7 +160,7 @@ export const Room = () => {
         </div>
       </div>
 
-      <div className='w-8/12'>
+      <div className="w-8/12">
         <ChatBlock />
       </div>
     </div>
