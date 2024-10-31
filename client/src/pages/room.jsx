@@ -13,8 +13,6 @@ function messageValidation(newMessage) {
   return null;
 }
 
-const socket = new WebSocket('ws://localhost:7070');
-
 export const Room = () => {
   const {
     currentRoom,
@@ -23,6 +21,7 @@ export const Room = () => {
     user,
     setAllChats,
     setAnyError,
+    sendMessage,
   } = useContext(Context);
 
   const [error, setError] = useState(null);
@@ -30,11 +29,6 @@ export const Room = () => {
   const navigate = useNavigate();
 
   const { roomId } = useParams();
-
-  socket.onmessage = ({ data }) => {
-    console.log('Message from server', JSON.parse(data));
-    setCurrentRoom(JSON.parse(data));
-  };
 
   useEffect(() => {
     const storedUser = localStorage.getItem('nickname');
@@ -127,7 +121,7 @@ export const Room = () => {
                   userService
                     .newMessage(newMessage, currentRoom.id)
                     .then((res) => {
-                      socket.send(JSON.stringify(res));
+                      sendMessage(res);
                       formikHelpers.resetForm();
                     })
                     .catch((error) => {

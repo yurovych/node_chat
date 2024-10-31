@@ -11,7 +11,7 @@ const createServer = () => {
 
   app.use(
     cors({
-      origin: process.env.CLIENT_HOST || 'http://localhost:7071',
+      origin: process.env.CLIENT_HOST || 'http://localhost:3000',
       credentials: true,
     }),
   );
