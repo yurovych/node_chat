@@ -33,9 +33,9 @@ const createServer = () => {
     socket.on('message', (message) => {
       console.log(`Recieved message ${message}`);
 
-      wss.clients.forEach((clie) => {
-        if (clie.readyState === WebSocket.OPEN) {
-          clie.send(message.toString());
+      wss.clients.forEach((client) => {
+        if (client.readyState === WebSocket.OPEN) {
+          client.send(message.toString());
         }
       });
     });

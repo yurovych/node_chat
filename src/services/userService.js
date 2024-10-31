@@ -1,14 +1,14 @@
 import { v4 as uuidv4 } from 'uuid';
 
 const newMessageService = (newMessage, user, emiter) => {
-  const unicId = uuidv4();
+  const uniqueId = uuidv4();
 
   if (!newMessage) {
     return 'Message required';
   }
 
   if (!user) {
-    return 'user required';
+    return 'User required';
   }
 
   const year = new Date().getFullYear();
@@ -20,7 +20,7 @@ const newMessageService = (newMessage, user, emiter) => {
   const time = `${day}/${month}/${year} at ${hours}:${minutes}`;
 
   const messageObj = {
-    id: unicId,
+    id: uniqueId,
     user: user,
     message: newMessage,
     time: time,

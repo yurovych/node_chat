@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const PORT = process.env.PORT || 7070;
+const PORT = 7070;
 
 const BASE_URL = `http://localhost:${PORT}`;
 

@@ -20,7 +20,7 @@ function messageValidation(message) {
   }
 
   if (message.trim().length > 3000) {
-    return 'Message is to long';
+    return 'Message is too long';
   }
 }
 
@@ -41,14 +41,16 @@ function chatNameValidation(newChatName) {
 const login = (req, res) => {
   user = req.body.nickname;
 
-  res.send(200);
+  res.sendStatus(200);
 };
 
 const setNewMessage = (req, res) => {
   const { newMessage, roomId } = req.body;
 
-  if (messageValidation(newMessage)) {
-    return messageValidation(newMessage);
+  const messageValidationError = messageValidation(newMessage);
+
+  if (messageValidationError) {
+    return res.status(400).json({ error: messageValidationError });
   }
 
   const currentRoom = rooms.find((room) => room.id === roomId);
@@ -110,9 +112,10 @@ const roomRename = (req, res) => {
     return res.status(403).json({ error: 'Only creator can rename a chat!' });
   }
 
-  const validationError = chatNameValidation(renameValue);
-  if (validationError) {
-    return res.status(400).json({ error: validationError });
+  const nameValidationError = chatNameValidation(renameValue);
+
+  if (nameValidationError) {
+    return res.status(400).json({ error: nameValidationError });
   }
 
   const neededRoomIndex = rooms.findIndex((room) => room.id === roomId);

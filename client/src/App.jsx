@@ -3,6 +3,7 @@ import { Formik, Form, Field } from 'formik';
 import { useContext, useEffect } from 'react';
 import { Context } from './context/context.jsx';
 import { ChatBlock } from './pages/ChatsBlock.jsx';
+import { ErrorHandler } from './pages/ErrorHandler.jsx';
 
 function nicknameValidation(nickname) {
   if (!nickname || nickname.trim().length === 0) {
@@ -14,7 +15,7 @@ function nicknameValidation(nickname) {
   }
 
   if (nickname.trim().includes(' ')) {
-    return 'One word reqiured';
+    return 'One word required';
   }
 }
 
@@ -23,7 +24,10 @@ export const App = () => {
 
   useEffect(() => {
     const storedUser = localStorage.getItem('nickname');
-    setUser(storedUser);
+
+    if (storedUser) {
+      setUser(storedUser);
+    }
   }, []);
 
   useEffect(() => {
@@ -84,55 +88,58 @@ export const App = () => {
                 .finally(() => formikHelpers.setSubmitting(false));
             }}
           >
-            {({ touched, errors, isSubmitting, resetForm, values }) => (
-              <Form className="flex flex-col items-center">
-                <h4>Enter yout nickname for start</h4>
+            {({ touched, errors, isSubmitting, resetForm, values }) => {
+              return (
+                <Form className="flex flex-col items-center">
+                  <h4>Enter your nickname to start</h4>
 
-                <div className="h-8 mb-1">
-                  <div className="h-full">
-                    <Field
-                      className="h-full rounded-xl p-2 mb-1"
-                      validate={nicknameValidation}
-                      name="nickname"
-                      type="text"
-                      id="nickname"
-                      placeholder="userX"
+                  <div className="h-8 mb-1">
+                    <div className="h-full">
+                      <Field
+                        className="h-full rounded-xl border-2 p-2 mb-1"
+                        validate={nicknameValidation}
+                        name="nickname"
+                        type="text"
+                        id="nickname"
+                        placeholder="userX"
+                      />
+                    </div>
+
+                    <ErrorHandler
+                      touched={touched.nickname}
+                      error={errors.nickname}
                     />
                   </div>
 
-                  {touched.nickname &&
-                    errors.nickname &&
-                    setAnyError(errors.nickname)}
-                </div>
+                  <div className="h-8">
+                    <button
+                      className="w-20 h-full mr-4 bg-green-500"
+                      type="submit"
+                      disabled={
+                        isSubmitting || errors.nickname || !values.nickname
+                      }
+                    >
+                      Save
+                    </button>
 
-                <div className="h-8">
-                  <button
-                    className="w-20 h-full mr-4 bg-green-500"
-                    type="submit"
-                    disabled={
-                      isSubmitting || errors.nickname || !values.nickname
-                    }
-                  >
-                    Save
-                  </button>
+                    <button
+                      className="w-20 h-full bg-blue-500"
+                      onClick={() => resetForm()}
+                      type="button"
+                      disabled={isSubmitting || !values.nickname}
+                    >
+                      Clear
+                    </button>
+                  </div>
 
-                  <button
-                    className="w-20 h-full bg-blue-500"
-                    onClick={() => resetForm()}
-                    type="button"
-                    disabled={isSubmitting || !values.nickname}
-                  >
-                    Clear
-                  </button>
-                </div>
-
-                {user ? (
-                  <p>{`Active user is "${user}"`}</p>
-                ) : (
-                  <p>{'No active user'}</p>
-                )}
-              </Form>
-            )}
+                  {user ? (
+                    <p>{`Active user is "${user}"`}</p>
+                  ) : (
+                    <p>{'No active user'}</p>
+                  )}
+                </Form>
+              );
+            }}
           </Formik>
         </div>
 

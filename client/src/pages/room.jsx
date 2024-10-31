@@ -7,7 +7,7 @@ import { ChatBlock } from './ChatsBlock.jsx';
 
 function messageValidation(newMessage) {
   if (newMessage.trim().length > 300) {
-    return 'Message is to long';
+    return 'Message is too long';
   }
 }
 
@@ -36,7 +36,10 @@ export const Room = () => {
 
   useEffect(() => {
     const storedUser = localStorage.getItem('nickname');
-    setUser(storedUser);
+
+    if (storedUser) {
+      setUser(storedUser);
+    }
   }, []);
 
   useEffect(() => {
@@ -98,13 +101,13 @@ export const Room = () => {
       {!user || !currentRoom ? (
         <h3>Loading...</h3>
       ) : (
-        <div className="flex justify-between gap-10 w-screen px-5 mt-5">
+        <div className=" flex justify-between gap-10 w-screen px-5 mt-5">
           <div className="flex flex-col items-center text-center w-4/12 mb-10">
             <div className="flex justify-between items-center h-8 w-full">
               <h4>{`${user} in a "${currentRoom.name}" room`} </h4>
 
               <button
-                className=" w-20 rounded-xl bg-red-600 h-full"
+                className=" w-20 rounded-xl border-2 bg-red-600 h-full"
                 onClick={handleLogOut}
                 type="button"
               >
@@ -112,7 +115,7 @@ export const Room = () => {
               </button>
             </div>
 
-            <div className="w-full">
+            <div className="border-2 w-full">
               <Formik
                 initialValues={{ newMessage: '' }}
                 validateOnMount={true}
@@ -122,10 +125,7 @@ export const Room = () => {
                   userService
                     .newMessage(newMessage, currentRoom.id)
                     .then((res) => {
-                      // console.log(JSON.stringify(res));
-
                       socket.send(JSON.stringify(res));
-                      // setCurrentRoom(res);
                       formikHelpers.resetForm();
                     })
                     .catch((error) => {
@@ -163,13 +163,13 @@ export const Room = () => {
                           return (
                             <div
                               key={mes.id}
-                              className="bg-slate-100 p-2 mb-2 rounded-xl w-full"
+                              className="bg-slate-100 p-2 mb-2 rounded-xl border-2 w-full"
                             >
                               <p className="text-start text-sm text-stone-500">
                                 {mes.user}
                               </p>
                               <p
-                                className="flex max-w-full p-2 rounded-xl bg-slate-200 w-full text-start"
+                                className="flex max-w-full p-2 rounded-xl border-2 bg-slate-200 w-full text-start"
                                 style={{
                                   wordBreak: 'break-word',
                                   overflowWrap: 'break-word',
@@ -191,7 +191,7 @@ export const Room = () => {
                       <div className="flex h-8">
                         <div className="w-full h-full">
                           <Field
-                            className="w-full border-1 border-gray-300 rounded-l-xl px-4 h-8"
+                            className="w-full border-1 border-gray-300 border-2 rounded-l-xl px-4 h-8"
                             validate={messageValidation}
                             name="newMessage"
                             type="text"
@@ -214,7 +214,7 @@ export const Room = () => {
                         </button>
 
                         <button
-                          className="w-20 rounded-r-xl h-full bg-blue-600"
+                          className="w-20 rounded-r-xl border-2 h-full bg-blue-600"
                           onClick={() => {
                             resetForm();
                             setFieldValue('newMessage', '');
