@@ -49,10 +49,10 @@ export const App = () => {
 
   return (
     <>
-      <div className='flex flex-col items-center'>
+      <div className="flex flex-col items-center">
         <h1>Welcome to Node Chat</h1>
 
-        <div className='mb-4'>
+        <div className="mb-4">
           <Formik
             initialValues={{ nickname: '' }}
             validateOnMount={true}
@@ -85,18 +85,18 @@ export const App = () => {
             }}
           >
             {({ touched, errors, isSubmitting, resetForm, values }) => (
-              <Form className='flex flex-col items-center'>
+              <Form className="flex flex-col items-center">
                 <h4>Enter yout nickname for start</h4>
 
-                <div className='h-8 mb-1'>
-                  <div className='h-full'>
+                <div className="h-8 mb-1">
+                  <div className="h-full">
                     <Field
-                      className='h-full rounded-xl p-2 mb-1'
+                      className="h-full rounded-xl p-2 mb-1"
                       validate={nicknameValidation}
-                      name='nickname'
-                      type='text'
-                      id='nickname'
-                      placeholder='userX'
+                      name="nickname"
+                      type="text"
+                      id="nickname"
+                      placeholder="userX"
                     />
                   </div>
 
@@ -105,10 +105,10 @@ export const App = () => {
                     setAnyError(errors.nickname)}
                 </div>
 
-                <div className='h-8'>
+                <div className="h-8">
                   <button
-                    className='w-20 h-full mr-4 bg-green-500'
-                    type='submit'
+                    className="w-20 h-full mr-4 bg-green-500"
+                    type="submit"
                     disabled={
                       isSubmitting || errors.nickname || !values.nickname
                     }
@@ -117,9 +117,9 @@ export const App = () => {
                   </button>
 
                   <button
-                    className='w-20 h-full bg-blue-500'
+                    className="w-20 h-full bg-blue-500"
                     onClick={() => resetForm()}
-                    type='button'
+                    type="button"
                     disabled={isSubmitting || !values.nickname}
                   >
                     Clear
@@ -136,7 +136,7 @@ export const App = () => {
           </Formik>
         </div>
 
-        <div className='w-3/4'>
+        <div className="w-3/4">
           <ChatBlock />
         </div>
       </div>

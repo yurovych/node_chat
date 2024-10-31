@@ -12,10 +12,10 @@ root.render(
   <ContextProvider>
     <Router>
       <Routes>
-        <Route path='/' element={<App />}></Route>
-        <Route path='/room/:roomId' element={<Room />}></Route>
-        <Route path='*' element={<NotFoundPage />} />
+        <Route path="/" element={<App />}></Route>
+        <Route path="/room/:roomId" element={<Room />}></Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
-  </ContextProvider>
+  </ContextProvider>,
 );
