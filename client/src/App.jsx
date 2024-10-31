@@ -17,6 +17,8 @@ function nicknameValidation(nickname) {
   if (nickname.trim().includes(' ')) {
     return 'One word required';
   }
+
+  return null;
 }
 
 export const App = () => {

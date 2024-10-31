@@ -9,6 +9,8 @@ function messageValidation(newMessage) {
   if (newMessage.trim().length > 300) {
     return 'Message is too long';
   }
+
+  return null;
 }
 
 const socket = new WebSocket('ws://localhost:7070');

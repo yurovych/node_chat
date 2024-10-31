@@ -17,6 +17,8 @@ function chatNameValidation(newChatName) {
   if (newChatName.length > 30) {
     return 'Less than 30 characters required';
   }
+
+  return null;
 }
 
 export const ChatBlock = () => {

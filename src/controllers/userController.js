@@ -22,6 +22,8 @@ function messageValidation(message) {
   if (message.trim().length > 3000) {
     return 'Message is too long';
   }
+
+  return null;
 }
 
 function chatNameValidation(newChatName) {
@@ -36,6 +38,8 @@ function chatNameValidation(newChatName) {
   if (newChatName.length > 30) {
     return 'Less then 30 characters required';
   }
+
+  return null;
 }
 
 const login = (req, res) => {

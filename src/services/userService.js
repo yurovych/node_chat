@@ -1,14 +1,14 @@
 import { v4 as uuidv4 } from 'uuid';
 
-const newMessageService = (newMessage, user, emiter) => {
+const newMessageService = (newMessage, user) => {
   const uniqueId = uuidv4();
 
   if (!newMessage) {
-    return 'Message required';
+    throw new Error('New message required');
   }
 
   if (!user) {
-    return 'User required';
+    throw new Error('User required');
   }
 
   const year = new Date().getFullYear();
